@@ -10,7 +10,7 @@ A React/Next.js SDK that automatically populates SEO meta tags from a secure API
 - 🎯 Full SEO meta coverage
 - 💰 Token utilities: ERC-20 transfer/approve/balance/allowance
 - 🎨 NFT utilities: ERC-721 owner, ERC-721/1155 transfers, ERC-1155 balance
-- 🔗 Rootstock ready (Mainnet 30, Testnet 31) — SDK defaults to Testnet in the example app
+- 🔗 Rootstock ready (Testnet 31) — SDK defaults to Testnet in the example app
 - 🌐 Wallet integration via RainbowKit + WalletConnect (styles auto-injected)
 - ✍️ Signature management (tx/message/personal/typed data)
 - 🔄 Network switching helpers
@@ -193,6 +193,17 @@ const {
 ```
 
 - `sendTransaction(to, value)` now powers the example app’s “Send tRBTC” flow and sends native tRBTC on Rootstock Testnet.
+
+Send native tRBTC:
+
+```ts
+const result = await sendTransaction('0xRecipient', '0.05');
+if (result.success) {
+  console.log('tx hash', result.txHash);
+} else {
+  console.error(result.error);
+}
+```
 
 ### Enhanced Token Transfer Hook
 
