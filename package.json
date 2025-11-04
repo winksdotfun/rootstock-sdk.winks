@@ -1,6 +1,6 @@
 {
   "name": "rootstockwinks",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "description": "A NextJS component that populates meta tags based on API key",
   "type": "module",
   "main": "./dist/index.mjs",
@@ -73,6 +73,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/winksdotfun/winksdotfun.git"
+    "url": "https://github.com/winksdotfun/rootstock-sdk.winks.git"
   }
 }

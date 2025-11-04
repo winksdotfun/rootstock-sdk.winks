@@ -34,7 +34,7 @@ export default function Home() {
               🔗 Wallet Integration Demo
             </Link>
             <a 
-              href="https://github.com/winksdotfun/winksdotfun" 
+              href="https://github.com/winksdotfun/rootstock-sdk.winks" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-colors"
