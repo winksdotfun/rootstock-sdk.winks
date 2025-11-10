@@ -1,1 +1,1 @@
-* [Winks SDK Docs (rootstock)](README.md)
+* [Winks SDK (rootstock)](README.md)
