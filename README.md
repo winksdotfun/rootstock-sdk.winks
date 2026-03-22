@@ -10,6 +10,7 @@ A React/Next.js SDK that automatically populates SEO meta tags from a secure API
 - 🎯 Full SEO meta coverage
 - 💰 Token utilities: ERC-20 transfer/approve/balance/allowance
 - 🎨 NFT utilities: ERC-721 owner, ERC-721/1155 transfers, ERC-1155 balance
+- 🚰 Testnet faucet: request tRBTC with a single function call
 - 🔗 Rootstock ready (Testnet 31) — SDK defaults to Testnet in the example app
 - 🌐 Wallet integration via RainbowKit + WalletConnect (styles auto-injected)
 - ✍️ Signature management (tx/message/personal/typed data)
@@ -247,6 +248,99 @@ const allowance = await getTokenAllowance('0xToken', '0xOwner', '0xSpender', pro
 const owner = await getNFTOwner('0xNft', '123', provider);
 await transferNFT('0xNft', '0xFrom', '0xTo', '123', signer);
 ```
+
+### Faucet
+
+Request testnet tRBTC for any Rootstock Testnet address. This calls the hosted faucet API — no wallet or signer required.
+
+#### Signature
+
+```ts
+import { faucet } from 'rootstockwinks';
+import type { FaucetResult } from 'rootstockwinks';
+
+faucet(address: string): Promise<FaucetResult>
+```
+
+| Parameter | Type     | Description                                      |
+|-----------|----------|--------------------------------------------------|
+| `address` | `string` | The Rootstock Testnet wallet address to fund.    |
+
+**Returns** a `FaucetResult` object:
+
+```ts
+interface FaucetResult {
+  txHash?: string;   // Transaction hash of the faucet transfer
+  message?: string;  // Human-readable status message from the API
+  [key: string]: unknown; // Any additional fields returned by the API
+}
+```
+
+#### Basic usage
+
+```ts
+import { faucet } from 'rootstockwinks';
+
+const result = await faucet('0xYourRootstockAddress');
+console.log('Funded! tx hash:', result.txHash);
+```
+
+#### With error handling
+
+```ts
+import { faucet } from 'rootstockwinks';
+
+try {
+  const result = await faucet('0xYourRootstockAddress');
+  console.log('Success:', result.message);
+  console.log('Transaction:', result.txHash);
+} catch (err) {
+  console.error(err.message); // e.g. "Faucet error: address must not be empty"
+}
+```
+
+#### In a React component
+
+```tsx
+import { useState } from 'react';
+import { faucet } from 'rootstockwinks';
+
+export function FaucetButton({ address }: { address: string }) {
+  const [txHash, setTxHash] = useState<string | null>(null);
+  const [error, setError]   = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleFaucet = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await faucet(address);
+      setTxHash(result.txHash ?? null);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={handleFaucet} disabled={loading}>
+        {loading ? 'Requesting…' : 'Get tRBTC'}
+      </button>
+      {txHash && <p>Transaction: {txHash}</p>}
+      {error   && <p style={{ color: 'red' }}>{error}</p>}
+    </div>
+  );
+}
+```
+
+#### Notes
+
+- Works on **Rootstock Testnet** (Chain ID 31) only — do not use mainnet addresses.
+- The address is automatically trimmed; passing an empty string throws immediately.
+- Errors from the API (e.g. rate limiting, invalid address) are surfaced as `Error` with the message `"Faucet error: <reason>"`.
+
 
 ### Network Configuration
 

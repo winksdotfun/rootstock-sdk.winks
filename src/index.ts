@@ -22,6 +22,9 @@ export {
   getTokenAllowance
 } from './functions/tokenTransfer';
 
+// Faucet
+export { faucet } from './functions/faucet';
+
 // Signature Manager
 export { default as SignatureManager } from './utils/signatureManager';
 export { default as Eip1193Provider } from './utils/eip1193Provider';
@@ -41,4 +44,5 @@ export type {
   TokenTransferParams,
   NFTTransferParams,
   ApprovalParams
-} from './types'; 
+} from './types';
+export type { FaucetResult } from './functions/faucet';
