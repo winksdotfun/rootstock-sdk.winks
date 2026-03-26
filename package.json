@@ -1,6 +1,6 @@
 {
   "name": "rootstockwinks",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A NextJS component that populates meta tags based on API key",
   "type": "module",
   "main": "./dist/index.mjs",
