@@ -25,6 +25,9 @@ export {
 // Faucet
 export { faucet } from './functions/faucet';
 
+// Staking (Stake Transaction)
+export { stakeTransaction, getWalletSigner } from './functions/stake';
+
 // Signature Manager
 export { default as SignatureManager } from './utils/signatureManager';
 export { default as Eip1193Provider } from './utils/eip1193Provider';
@@ -46,3 +49,8 @@ export type {
   ApprovalParams
 } from './types';
 export type { FaucetResult } from './functions/faucet';
+export type { 
+  StakeOptions, 
+  StakeTransactionParams, 
+  StakeTransactionResult 
+} from './functions/stake';

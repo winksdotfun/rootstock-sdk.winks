@@ -341,6 +341,53 @@ export function FaucetButton({ address }: { address: string }) {
 - The address is automatically trimmed; passing an empty string throws immediately.
 - Errors from the API (e.g. rate limiting, invalid address) are surfaced as `Error` with the message `"Faucet error: <reason>"`.
 
+### Staking
+
+```ts
+import { stakeTransaction, getWalletSigner } from 'rootstockwinks';
+import { StakeTransactionParams, StakeTransactionResult } from 'rootstockwinks';
+
+// Get a signer from the injected browser wallet
+getWalletSigner(): Promise<ethers.JsonRpcSigner>
+
+// Replay the transaction
+stakeTransaction(params: StakeTransactionParams): Promise<StakeTransactionResult>
+```
+
+#### Basic Usage
+
+```ts
+import { stakeTransaction, getWalletSigner } from 'rootstockwinks';
+
+try {
+  const signer = await getWalletSigner();
+  
+  const result = await stakeTransaction({
+    txHash: "0xYourTransactionHash",
+    signer,
+  });
+  
+  if (result.status === "success") {
+    console.log("Transaction successful! New tx hash:", result.hash);
+  }
+} catch (error) {
+  console.error("Transaction failed:", error);
+}
+```
+
+#### Advanced Options (Value Overrides & Dry Run)
+
+```ts
+const result = await stakeTransaction({
+  txHash: "0x...",
+  signer,
+  options: {
+    valueEth: "0.1", // Send 0.1 native token instead of original amount
+    useOriginalNonce: false, // Use current nonce (default)
+    dryRun: true,    // Only sign, do not broadcast
+  },
+});
+```
 
 ### Network Configuration
 
