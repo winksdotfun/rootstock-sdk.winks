@@ -25,6 +25,13 @@ export {
 // Faucet
 export { faucet } from './functions/faucet';
 
+// Social Sharing
+export { 
+  generateTweetUrl,
+  generatePostTransactionTweet,
+  openTweet
+} from './functions/social';
+
 // Staking (Stake Transaction)
 export { stakeTransaction, getWalletSigner } from './functions/stake';
 
@@ -49,6 +56,10 @@ export type {
   ApprovalParams
 } from './types';
 export type { FaucetResult } from './functions/faucet';
+export type {
+  TweetParams,
+  PostTxTweetParams
+} from './functions/social';
 export type { 
   StakeOptions, 
   StakeTransactionParams, 

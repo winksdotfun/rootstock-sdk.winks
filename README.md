@@ -350,7 +350,7 @@ import { StakeTransactionParams, StakeTransactionResult } from 'rootstockwinks';
 // Get a signer from the injected browser wallet
 getWalletSigner(): Promise<ethers.JsonRpcSigner>
 
-// Replay the transaction
+// Execute the staking transaction
 stakeTransaction(params: StakeTransactionParams): Promise<StakeTransactionResult>
 ```
 
@@ -387,6 +387,26 @@ const result = await stakeTransaction({
     dryRun: true,    // Only sign, do not broadcast
   },
 });
+```
+
+### Social Sharing (Post-Transaction)
+
+The SDK provides utilities for generating Twitter (X) intents so users can tweet about their successful transactions implicitly highlighting Rootstock.
+
+```ts
+import { generatePostTransactionTweet, openTweet } from 'rootstockwinks';
+
+// After a successful transaction...
+const tweetUrl = generatePostTransactionTweet({
+  action: "staked",
+  amount: "100",
+  token: "tRBTC",
+  txHash: "0x...", // The transaction hash
+  network: "testnet" 
+});
+
+// To automatically open it in a new tab:
+openTweet(tweetUrl);
 ```
 
 ### Network Configuration
