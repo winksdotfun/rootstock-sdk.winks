@@ -1,12 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { render, screen, waitFor } from '@testing-library/react';
 import Winks from '../Winks';
+import axios from 'axios';
 
 // Mock axios
-jest.mock('axios', () => ({
-  get: jest.fn(),
-}));
-const axios = require('axios');
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('Winks Component', () => {
   beforeEach(() => {
@@ -14,18 +14,25 @@ describe('Winks Component', () => {
   });
 
   it('renders children correctly', async () => {
-    axios.get.mockResolvedValue({ data: {} });
+    mockedAxios.get.mockResolvedValue({ data: { title: 'Test Title' } });
+    
     render(
       <Winks apikey="test-key">
         <div>Test Content</div>
       </Winks>
     );
-    await screen.findByText('Loading...');
-    expect(await screen.findByText('Test Content')).toBeInTheDocument();
+    
+    // Wait for the loading state to be gone and content to appear
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    });
+    
+    expect(screen.getByText('Test Content')).toBeInTheDocument();
   });
 
   it('uses fallback data when provided', async () => {
-    axios.get.mockRejectedValue(new Error('network'));
+    mockedAxios.get.mockRejectedValue(new Error('network error'));
+    
     const fallbackData = {
       title: 'Fallback Title',
       description: 'Fallback Description'
@@ -37,6 +44,10 @@ describe('Winks Component', () => {
       </Winks>
     );
 
-    expect(await screen.findByText('Test Content')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Test Content')).toBeInTheDocument();
   });
-}); 
+});
