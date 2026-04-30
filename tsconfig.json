@@ -17,7 +17,8 @@
     "jsx": "react",
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "types": ["jest", "@testing-library/jest-dom"]
   },
   "include": [
     "src/**/*",
@@ -25,8 +26,6 @@
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "**/*.test.ts",
-    "**/*.test.tsx"
+    "dist"
   ]
-} 
+}
