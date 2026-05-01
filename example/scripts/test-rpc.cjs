@@ -1,4 +1,6 @@
-const { RpcManager } = require('../dist/index.cjs');
+const path = require('path');
+const sdkRoot = path.join(__dirname, '..', '..');
+const { RpcManager } = require(path.join(sdkRoot, 'dist', 'index.cjs'));
 const { ethers } = require('ethers');
 
 async function testRpcManager() {
@@ -161,4 +163,3 @@ testRpcManager().catch((error) => {
   console.error(error);
   process.exit(1);
 });
-

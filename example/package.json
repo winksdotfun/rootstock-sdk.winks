@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:rpc": "node scripts/test-rpc.cjs",
+    "test:testnet": "node scripts/testnet-connectivity.cjs",
+    "test:eip1193": "node scripts/test-eip1193.cjs",
+    "test:jest": "node scripts/test-jest.cjs",
+    "test:playwright-runner": "node scripts/test-plawright.cjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.7.0",

@@ -1,12 +1,15 @@
 /**
  * Test script for EIP-1193 Provider Integration
  * Tests with REAL Rootstock RPC endpoints (no mocks)
- * 
- * Run with: node test-eip1193.js
+ *
+ * Run: node scripts/test-eip1193.cjs (from example/), after building the SDK at repo root.
  */
 
-const { Eip1193Provider } = require('../dist/index.cjs');
-const { SignatureManager } = require('../dist/index.cjs');
+const path = require('path');
+const sdkRoot = path.join(__dirname, '..', '..');
+const sdkDist = path.join(sdkRoot, 'dist', 'index.cjs');
+const { Eip1193Provider } = require(sdkDist);
+const { SignatureManager } = require(sdkDist);
 const { ethers } = require('ethers');
 
 /**
@@ -360,12 +363,12 @@ async function testSignatureManager() {
 async function runTests() {
   console.log('🚀 Starting EIP-1193 Provider Integration Tests');
   console.log('🔴 Using REAL Rootstock RPC endpoints (NO MOCKS)\n');
-  console.log('=' .repeat(60) + '\n');
+  console.log('='.repeat(60) + '\n');
 
   await testEip1193Provider();
   await testSignatureManager();
 
-  console.log('=' .repeat(60));
+  console.log('='.repeat(60));
   console.log('\n✅ All tests completed with REAL data!');
   console.log('\n📝 Summary:');
   console.log('   ✅ Connected to REAL Rootstock Mainnet RPC');

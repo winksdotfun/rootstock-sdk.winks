@@ -4,10 +4,12 @@ import axios from 'axios';
 import { getApiBaseUrl } from '../config/api';
 import { WinksProps, MetaData } from '../types';
 
+const EMPTY_FALLBACK: MetaData = {};
+
 const Winks: React.FC<WinksProps> = ({ 
   apikey, 
   children, 
-  fallback = {} 
+  fallback = EMPTY_FALLBACK 
 }) => {
   const styleElement = useMemo(() => {
     if (typeof document === 'undefined') {

@@ -9,6 +9,7 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
       "default": "./dist/index.mjs"
     },
     "./package.json": "./package.json"
@@ -33,7 +34,7 @@
   "author": "winksdotfun",
   "license": "MIT",
   "peerDependencies": {
-    "next": "^13.0.0",
+    "next": "^13.0.0 || ^14.0.0",
     "react": "^18.0.0"
   },
   "dependencies": {

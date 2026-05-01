@@ -4,9 +4,12 @@ import { render, screen, waitFor } from '@testing-library/react';
 import Winks from '../Winks';
 import axios from 'axios';
 
-// Mock axios
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+jest.mock('axios', () => ({
+  __esModule: true,
+  default: { get: jest.fn() },
+}));
+
+const mockedGet = axios.get as jest.Mock;
 
 describe('Winks Component', () => {
   beforeEach(() => {
@@ -14,7 +17,7 @@ describe('Winks Component', () => {
   });
 
   it('renders children correctly', async () => {
-    mockedAxios.get.mockResolvedValue({ data: { title: 'Test Title' } });
+    mockedGet.mockResolvedValue({ data: { title: 'Test Title' } });
     
     render(
       <Winks apikey="test-key">
@@ -31,7 +34,7 @@ describe('Winks Component', () => {
   });
 
   it('uses fallback data when provided', async () => {
-    mockedAxios.get.mockRejectedValue(new Error('network error'));
+    mockedGet.mockRejectedValue(new Error('network error'));
     
     const fallbackData = {
       title: 'Fallback Title',

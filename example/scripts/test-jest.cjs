@@ -1,7 +1,7 @@
-
-
 const { execSync } = require('child_process');
 const path = require('path');
+
+const sdkRoot = path.join(__dirname, '..', '..');
 
 const COLORS = {
   reset: '\x1b[0m',
@@ -40,19 +40,17 @@ async function runJestTests() {
 
   try {
     logInfo('Running Jest tests with real Rootstock RPC data (NO MOCKS)...\n');
-    
-    // Run Jest tests
+
     execSync('npx jest', {
       stdio: 'inherit',
-      cwd: path.join(__dirname, '..'),
+      cwd: sdkRoot,
       env: {
         ...process.env,
-        // Ensure tests use real RPC endpoints
         ROOTSTOCK_MAINNET_RPC: 'https://public-node.rsk.co',
         ROOTSTOCK_TESTNET_RPC: 'https://public-node.testnet.rsk.co',
       },
     });
-    
+
     logSuccess('\nAll Jest tests passed!');
     return true;
   } catch (error) {
@@ -61,7 +59,6 @@ async function runJestTests() {
   }
 }
 
-// Run tests
 runJestTests()
   .then((success) => {
     if (!success) {
@@ -72,4 +69,3 @@ runJestTests()
     logError(`Test runner failed: ${error.message}`);
     process.exit(1);
   });
-
